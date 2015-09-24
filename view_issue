@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $# != 1 -a ! -f current ]; then echo "Specificare il numero della rivista."; exit 2; fi
+
+if [ -f current ]; then current_issue=`cat current`; fi
+
+if [ $# == 1 ]; then
+        issue_number=$1
+else
+        issue_number=$current_issue
+fi
+
+if which evince; then
+	evince n$issue_number/tex_stuff/IRR_$issue_number.pdf &>/dev/null &
+elif which okular; then
+	okular n$issue_number/tex_stuff/IRR_$issue_number.pdf &>/dev/null &
+fi
+
+exit 0

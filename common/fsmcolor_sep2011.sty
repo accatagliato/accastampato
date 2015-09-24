@@ -1,0 +1,216 @@
+%
+% Colors for headings, title, author, background
+% Ricorda: sia in cmyk che in rgb i valori vanno da 0 a 1, quindi
+% bisogna eventualmente normalizzarli dividendo per 255
+%
+
+%\def\@articletype{}  \def\articletype#1{\gdef\@articletype{\uppercase{#1}}}
+
+% Colori globali
+\definecolor{InstitutionColor}{cmyk}{0,0,0,0}% Dipartimento
+\definecolor{AuthorFont}{cmyk}{0,0,0,0}% Autore
+\definecolor{AuthorContentsColor}{cmyk}{0,0,0,.5}% Autore nell'indice
+\definecolor{NormalText}{cmyk}{0,0,0,1} % Colore del testo
+\definecolor{InvtdText}{cmyk}{0,0,0,0} % Colore del capolettera
+\definecolor{TitleFont}{cmyk}{.710,.350,.020,.010} % Titolo dell'articolo
+\definecolor{TitleBold}{cmyk}{.710,.350,.020,.010}%{.400,0,1,.300} % Idem, se bold
+\definecolor{PaperFont}{cmyk}{0,0,0,1}%{0,0,0,.700} % Title within journal
+\definecolor{PaperBold}{cmyk}{0,0,0,1}% Title "bold" within journal
+%\definecolor{SubtitleFont}{cmyk}{.050,0,.200,0}% Sottotitolo {.050,0,.200,0} (grigio)
+\definecolor{SubtitleFont}{cmyk}{0,0,0,0}% Sottotitolo {.050,0,.200,0}
+%\definecolor{SubtitleBold}{cmyk}{0,0,.350,.400}% Sottotitolo "bold" (grigio)
+\definecolor{SubtitleBold}{cmyk}{0,0,0,0}% Sottotitolo "bold"
+%\definecolor{PaperSubtitleFont}{cmyk}{0,0,0,.700}% Subtitle "bold" within journal (grigio)
+\definecolor{PaperSubtitleFont}{cmyk}{0,0,0,0}% Subtitle "bold" within journal
+\definecolor{PaperSubtitleBold}{cmyk}{0,0,0,1}% Subtitle "bold" within journal
+\definecolor{SubjectHeadColor}{cmyk}{0,0,0,1}% La scritta in alto in ogni pagina
+\definecolor{SubjectColor}{cmyk}{.42,0,.78,.22}% La sezione dell'indice
+\definecolor{BoardBackground}{cmyk}{.050,0,.200,0}% Board background
+\definecolor{BoardHeadingBg}{cmyk}{0,0,.350,.400}% Board heading background
+\definecolor{FloatBox}{cmyk}{0,0,0,.600}% Linea degli oggetti flottanti (non usato?)
+\definecolor{RuleColor}{cmyk}{.42,0,.78,.22}% Header and footer rule color
+
+% Colori che dipendono da articletypie
+% ATTENZIONE: Il codice seguente funziona se articletype è già definito (viene
+% definito in openpaper.sty, in teoria caricato prima in openjournal)
+% \def\@IRR{\uppercase {Il Ricercatore Romano}}
+% \def\@IRN{\uppercase {Il Resto del Neutrino}}
+% \def\@NG{\uppercase {Nanos Gigantum}}
+% \def\@OL{\uppercase {Onda Lunga}}
+% \def\@REC{\uppercase {Recensioni}}
+% \def\@ESP{\uppercase {Esperimenti}}
+% \def\@EV{\uppercase {Eventi}}
+% 
+% \ifx\@articletype\@IRR
+% \typeout{Colori per Il Ricercatore Romano}
+%   \definecolor{QuoteTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box citazioni
+%   \definecolor{QuoteTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box citazioni
+%   \definecolor{PillTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box pillola
+%   \definecolor{PillTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box pillola
+%   \definecolor{InvtdBackground}{cmyk}{.42,0,.78,.22}% Sfondo del capolettera
+% %  \definecolor{InvtdBackground}{cmyk}{0,0,0,1}% Sfondo del capolettera
+%   \definecolor{ListBackground}{cmyk}{.050,0,.200,0}% Textbox background
+%   \definecolor{BoxRule}{cmyk}{0,0,.350,.400}% Textbox framerule
+%   \definecolor{HeadingsFont}{cmyk}{.42,0,.78,.22}% Titolo dei paragrafi
+%   \definecolor{HeadingsBold}{cmyk}{0,0,0,1}% Titolo dei paragrafi "bold"
+%   \definecolor{BioBackground}{cmyk}{.42,0,.78,.22}% Biography title background
+%   \definecolor{BiographyBg}{cmyk}{.050,0,.200,0}% Biography background
+% %  \ifprinted
+% %    \definecolor{ZoomColor}{cmyk}{0,0,0,.700}% Zoom
+% %  \else
+%     \definecolor{ZoomColor}{cmyk}{.42,0,.78,.22}% Zoom
+% %  \fi
+%   \definecolor{VerbBG}{cmyk}{0,0,0,.200}% Verbatim listings background
+% \else
+% \ifx\@articletype\@IRN
+% \typeout{Colori per Il Resto del Neutrino}
+% \definecolor{QuoteTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box citazioni
+% \definecolor{QuoteTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box citazioni
+% \definecolor{PillTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box pillola
+% \definecolor{PillTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box pillola
+% \definecolor{InvtdBackground}{cmyk}{.42,0,.78,.22}% Sfondo del capolettera
+% \definecolor{ListBackground}{cmyk}{.050,0,.200,0}% Textbox background
+% \definecolor{BoxRule}{cmyk}{0,0,.350,.400}% Textbox framerule
+% \definecolor{HeadingsFont}{cmyk}{.42,0,.78,.22}% Titolo dei paragrafi
+% \definecolor{HeadingsBold}{cmyk}{0,0,0,1}% Titolo dei paragrafi "bold"
+% \definecolor{BioBackground}{cmyk}{.42,0,.78,.22}% Biography title background
+% \definecolor{BiographyBg}{cmyk}{.050,0,.200,0}% Biography background
+% %\ifprinted
+% %  \definecolor{ZoomColor}{cmyk}{0,0,0,.700}% Zoom
+% %\else
+%   \definecolor{ZoomColor}{cmyk}{.42,0,.78,.22}% Zoom
+% %\fi
+% \definecolor{VerbBG}{cmyk}{0,0,0,.200}% Verbatim listings background
+% \else
+% \ifx\@articletype\@NG
+% \typeout{Colori per Nanos Gigantum}
+% \definecolor{QuoteTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box citazioni
+% \definecolor{QuoteTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box citazioni
+% \definecolor{PillTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box pillola
+% \definecolor{PillTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box pillola
+% \definecolor{InvtdBackground}{cmyk}{.42,0,.78,.22}% Sfondo del capolettera
+% \definecolor{ListBackground}{cmyk}{.050,0,.200,0}% Textbox background
+% \definecolor{BoxRule}{cmyk}{0,0,.350,.400}% Textbox framerule
+% \definecolor{HeadingsFont}{cmyk}{.42,0,.78,.22}% Titolo dei paragrafi
+% \definecolor{HeadingsBold}{cmyk}{0,0,0,1}% Titolo dei paragrafi "bold"
+% \definecolor{BioBackground}{cmyk}{.42,0,.78,.22}% Biography title background
+% \definecolor{BiographyBg}{cmyk}{.050,0,.200,0}% Biography background
+% %\ifprinted
+% %  \definecolor{ZoomColor}{cmyk}{0,0,0,.700}% Zoom
+% %\else
+%   \definecolor{ZoomColor}{cmyk}{.42,0,.78,.22}% Zoom
+% %\fi
+% \definecolor{VerbBG}{cmyk}{0,0,0,.200}% Verbatim listings background
+% \else
+% \ifx\@articletype\@OL
+% \typeout{Colori per Onda Lunga}
+% \definecolor{QuoteTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box citazioni
+% \definecolor{QuoteTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box citazioni
+% \definecolor{PillTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box pillola
+% \definecolor{PillTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box pillola
+% \definecolor{InvtdBackground}{cmyk}{.42,0,.78,.22}% Sfondo del capolettera
+% \definecolor{ListBackground}{cmyk}{.050,0,.200,0}% Textbox background
+% \definecolor{BoxRule}{cmyk}{0,0,.350,.400}% Textbox framerule
+% \definecolor{HeadingsFont}{cmyk}{.42,0,.78,.22}% Titolo dei paragrafi
+% \definecolor{HeadingsBold}{cmyk}{0,0,0,1}% Titolo dei paragrafi "bold"
+% \definecolor{BioBackground}{cmyk}{.42,0,.78,.22}% Biography title background
+% \definecolor{BiographyBg}{cmyk}{.050,0,.200,0}% Biography background
+% %\ifprinted
+% %  \definecolor{ZoomColor}{cmyk}{0,0,0,.700}% Zoom
+% %\else
+%   \definecolor{ZoomColor}{cmyk}{.42,0,.78,.22}% Zoom
+% %\fi
+% \definecolor{VerbBG}{cmyk}{0,0,0,.200}% Verbatim listings background
+% \else
+% \ifx\@articletype\@REC
+% \typeout{Colori per Recensioni}
+% \definecolor{QuoteTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box citazioni
+% \definecolor{QuoteTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box citazioni
+% \definecolor{PillTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box pillola
+% \definecolor{PillTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box pillola
+% \definecolor{InvtdBackground}{cmyk}{.42,0,.78,.22}% Sfondo del capolettera
+% \definecolor{ListBackground}{cmyk}{.050,0,.200,0}% Textbox background
+% \definecolor{BoxRule}{cmyk}{0,0,.350,.400}% Textbox framerule
+% \definecolor{HeadingsFont}{cmyk}{.42,0,.78,.22}% Titolo dei paragrafi
+% \definecolor{HeadingsBold}{cmyk}{0,0,0,1}% Titolo dei paragrafi "bold"
+% \definecolor{BioBackground}{cmyk}{.42,0,.78,.22}% Biography title background
+% \definecolor{BiographyBg}{cmyk}{.050,0,.200,0}% Biography background
+% %\ifprinted
+% %  \definecolor{ZoomColor}{cmyk}{0,0,0,.700}% Zoom
+% %\else
+% %  \definecolor{ZoomColor}{cmyk}{.42,0,.78,.22}% Zoom
+% %\fi
+% \definecolor{VerbBG}{cmyk}{0,0,0,.200}% Verbatim listings background
+% \else
+% %\ifx\@articletype\@ESP
+% %\typeout{Colori per Esperimenti}
+% %\definecolor{QuoteTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box citazioni
+% %\definecolor{QuoteTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box citazioni
+% %\definecolor{PillTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box pillola
+% %\definecolor{PillTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box pillola
+% %\definecolor{InvtdBackground}{cmyk}{.42,0,.78,.22}% Sfondo del capolettera
+% %\definecolor{ListBackground}{cmyk}{.050,0,.200,0}% Textbox background
+% %\definecolor{BoxRule}{cmyk}{0,0,.350,.400}% Textbox framerule
+% %\definecolor{HeadingsFont}{cmyk}{.42,0,.78,.22}% Titolo dei paragrafi
+% %\definecolor{HeadingsBold}{cmyk}{0,0,0,1}% Titolo dei paragrafi "bold"
+% %\definecolor{BioBackground}{cmyk}{.42,0,.78,.22}% Biography title background
+% %\definecolor{BiographyBg}{cmyk}{.050,0,.200,0}% Biography background
+% %\ifprinted
+% %  \definecolor{ZoomColor}{cmyk}{0,0,0,.700}% Zoom
+% %\else
+% %  \definecolor{ZoomColor}{cmyk}{.42,0,.78,.22}% Zoom
+% %\fi
+% %\definecolor{VerbBG}{cmyk}{0,0,0,.200}% Verbatim listings background
+% %\else
+% \ifx\@articletype\@EV
+% \typeout{Colori per Eventi}
+% \definecolor{QuoteTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box citazioni
+% \definecolor{QuoteTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box citazioni
+% \definecolor{PillTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box pillola
+% \definecolor{PillTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box pillola
+% \definecolor{InvtdBackground}{cmyk}{.42,0,.78,.22}% Sfondo del capolettera
+% \definecolor{ListBackground}{cmyk}{.050,0,.200,0}% Textbox background
+% \definecolor{BoxRule}{cmyk}{0,0,.350,.400}% Textbox framerule
+% \definecolor{HeadingsFont}{cmyk}{.42,0,.78,.22}% Titolo dei paragrafi
+% \definecolor{HeadingsBold}{cmyk}{0,0,0,1}% Titolo dei paragrafi "bold"
+% \definecolor{BioBackground}{cmyk}{.42,0,.78,.22}% Biography title background
+% \definecolor{BiographyBg}{cmyk}{.050,0,.200,0}% Biography background
+% %\ifprinted
+% %  \definecolor{ZoomColor}{cmyk}{0,0,0,.700}% Zoom
+% %\else
+%   \definecolor{ZoomColor}{cmyk}{.42,0,.78,.22}% Zoom
+% %\fi
+% \definecolor{VerbBG}{cmyk}{0,0,0,.200}% Verbatim listings background
+% \else
+\definecolor{QuoteTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box citazioni
+\definecolor{QuoteTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box citazioni
+\definecolor{PillTitleBg}{cmyk}{.42,0,.78,.22} % Sfondo del titolo del box pillola
+\definecolor{PillTextBg}{cmyk}{.050,0,.200,0} % Sfondo del corpo del box pillola
+\definecolor{InvtdBackground}{cmyk}{.710,.350,.020,.010}% Sfondo del capolettera
+\definecolor{ListBackground}{cmyk}{.050,0,.200,0}% Textbox background
+\definecolor{BoxRule}{cmyk}{0,0,.350,.400}% Textbox framerule
+\definecolor{HeadingsFont}{cmyk}{.42,0,.78,.22}% Titolo dei paragrafi
+\definecolor{HeadingsBold}{cmyk}{0,0,0,1}% Titolo dei paragrafi "bold"
+\definecolor{BioBackground}{cmyk}{.710,.350,.020,.010}% Biography title background
+\definecolor{BiographyBg}{cmyk}{.050,0,.200,0}% Biography background
+%\ifprinted
+%  \definecolor{ZoomColor}{cmyk}{0,0,0,.700}% Zoom
+%\else
+  \definecolor{ZoomColor}{cmyk}{.42,0,.78,.22}% Zoom
+%\fi
+\definecolor{VerbBG}{cmyk}{0,0,0,.200}% Verbatim listings background
+%\fi\fi\fi\fi\fi\fi\fi\fi
+
+
+
+
+
+%azzurro {.710,.350,.020,.010}
+%azzurrino {.150,1,1,0}
+%giallino {.050,0,.200,0}
+%giallino quasi invisibile {.050,0,.200,0}
+%giallo grigio {0,0,.350,.400}
+%rosso bordo' {.42,0,.78,.22}
+%rosso {0,.99,1,0}
+%verde scuro {.400,0,1,.300}
+%verdino notte 2011 {.42,0,.78,.22}

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ $# != 1 ]; then echo "Specificare la cartella dell'articolo"; exit 2; fi
+
+okular $1/index.pdf &>/dev/null &
+
+exit 0

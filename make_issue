@@ -1,0 +1,1 @@
+./compile_issue &> error.log && grep "Fatal error" error.log

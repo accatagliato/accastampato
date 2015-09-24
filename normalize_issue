@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# != 1 -a ! -f current ]; then echo "Specificare il numero della rivista."; exit 2; fi
+
+if [ -f current ]; then current_issue=`cat current`; fi
+
+if [ $# == 1 ]; then
+        issue_number=$1
+else
+        issue_number=$current_issue
+fi
+
+pdf2ps n$issue_number/tex_stuff/IRR_$current_issue.pdf && pstopdf IRR_$current_issue.ps && rm IRR_$current_issue.ps
+
+exit 0

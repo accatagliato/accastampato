@@ -1,0 +1,1 @@
+./compile_article $1 &> error.log && grep "Fatal error" error.log

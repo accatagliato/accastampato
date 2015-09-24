@@ -1,0 +1,122 @@
+#!/bin/bash
+
+LANG="_it"
+
+if [ $# != 1 -a ! -f current ]; then echo "==> Fatal error: Specificare il numero della rivista."; exit 2; fi
+
+if [ -f current ]; then current_issue=`cat current`; fi
+
+if [ $# == 1 ]; then
+	issue_number=$1
+else
+	issue_number=$current_issue
+fi
+
+if [ ! -d "n"$issue_number"/" ]; then 
+	echo "==> Fatal error: hai specificato il numero della rivista corretto?"
+	exit 2
+else
+	dir="n"$issue_number
+fi
+
+issue_name="IRR_"$current_issue
+echo "Genero la rivista $issue_name."
+echo
+
+# Preparazione delle immagini
+LORES_VALUE="600" # Qualità bassa (dimensione lineare orizzontale in px)
+MEDRES_VALUE="800" # Adatta per la diffusione on-line
+# Ci si aspetta che le immagini originali siano a 300dpi
+# adatte per la stampa di qualità
+# pdflatex non accetta le immagini gif, vanno convertite.
+echo "Converto eventuali immagini gif in png"
+for F in `find $dir/ -name *.gif`; do 
+	convert $F ${F/.gif/.png}
+	echo "Converto e cancello $F"
+	rm $F
+done
+
+echo "Riduco la risoluzione delle immagini..."
+for EXT in jpg png; do
+	# Tutte le immagini che non contengono lores o medres nel nome
+	for F in `find $dir/ -name "*.$EXT"`; do
+		A=`echo $F | grep lores``echo $F | grep medres`
+		if [ -z "$A" ]; then
+			# La qualità dipende dall'opzione della classe openjournal
+			# electronic = draft
+			# subscriber = diffusione on-line
+			if grep ,electronic "$dir"/tex_stuff/issue_head.tex > /dev/null; then
+				# Nome del file di output
+				LORES_FILE=`expr match "$F" '\(.*/\).*\.'`"lores_"`expr match "$F" '.*/\(.*\)'`
+				if [ ! -f "$LORES_FILE" ]; then # Se non esiste...
+                                        convert -resize $LORES_VALUE "$F" "$LORES_FILE"
+                                        echo "Degrado $F del $LORE_VALUE..."
+				fi
+			elif grep ,subscriber "$dir"/tex_stuff/issue_head.tex > /dev/null; then 
+				MEDRES_FILE=`expr match "$F" '\(.*/\).*\.'`"medres_"`expr match "$F" '.*/\(.*\)'`
+				if [ ! -f "$MEDRES_FILE" ]; then
+                                        convert -resize $MEDRES_VALUE "$F" "$MEDRES_FILE"
+                                        echo "Degrado $F del $MEDRES_VALUE..."
+				fi
+			fi
+		fi
+	done
+done
+
+# Enter the text_stuff directory
+# (that's where all the work is actually done)
+#
+cd $dir/tex_stuff
+
+if [ $? != 0 ];then
+        echo "==> Fatal error: cannot enter $dir/text_stuff, exiting..."
+        exit
+fi
+
+if [ ! -f issue_head.tex -o ! -f issue_tail.tex ];then
+	echo "==> Fatal error: issue_head.tex or issue_tail.tex missing." >&2
+	exit 1;
+fi
+
+cat issue_head.tex issue_tail.tex > $issue_name".tex"
+find ../articles/ -name bibliography.bib -exec bash -c 'cat {}' \; > bibliography.bib
+
+echo "Compilazione..."
+export TEXINPUTS="../../common$LANG:../../graphics:"
+rm "$issue_name".auk
+pdflatex -interaction nonstopmode $issue_name
+bibtex $issue_name".aux"
+
+for (( i = 1; i <= 3; i = i + 1 )) do
+  if grep error error.log; then break; fi
+
+  echo "\\def\\pos
+\\pos=\\thepage" > tmp1.jou
+  cat tmp1.jou "$issue_name".jou > tmp2.jou
+  sed 's/\\vfill/}\ \\ifx\\pos\\thepage\ \\vfill\ \\fi\ \\parbox{\\columnwidth}{\ /g' tmp2.jou | sed '3s/}\ \\ifx\\pos\\thepage\ \\vfill\ \\fi//' | sed '4s/\\sffamily/\\vbox{\ \\sffamily/' > "$issue_name".jou
+  rm tmp*.jou
+  echo "} \\vfill" >> "$issue_name".jou
+  # Se l'ultima pagine dell'indice occupa solo la prima colonna...
+#  echo "\\columnad{index-img2}" >> "$issue_name".jou
+  cp "$issue_name".jou tmp.jou
+
+  pdflatex -interaction nonstopmode $issue_name
+
+  if [ -f "$issue_name.auk" ]; then
+    cat "$issue_name".auk | sed 's/\ skip/\\\\\
+  /g' >> "$issue_name".aut;
+  fi
+  sed 's/\\unskip , /\\\\\
+ /g' "$issue_name".aut > tmp.aut
+  sed 's/ \\emph {et al.}//g' tmp.aut > tmp1.aut
+  awk '{print $NF"	"$0}' $* < tmp1.aut | sort -u | cut -f2- > "$issue_name".aut
+  sed -e 's/\\\\/,/g' < "$issue_name".aut > tmp.aut
+  sed -e '$s/, $/./g' < tmp.aut > "$issue_name".aut
+done
+
+pdftk $issue_name".pdf" cat output $issue_name"_norm.pdf"
+mv $issue_name"_norm.pdf" $issue_name".pdf"
+echo "Fatto!"
+echo
+
+exit 0
