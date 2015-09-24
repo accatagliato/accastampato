@@ -10,7 +10,7 @@ A modern Linux shell (ie. bash), PdfLaTeX, BibTex, imagemagick (convert utility)
 
 # Fast how-to
 
-Uncompress the tarball somewhere in your filesystem.
+Clone the repository with `git clone https://github.com/accatagliato/accastampato.git` or download and uncompress the tarball somewhere in your filesystem.
 
 Enter the aforementioned directory: there you're provided with 3 scripts:
 
