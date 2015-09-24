@@ -39,7 +39,7 @@ done
 echo "Riduco la risoluzione delle immagini..."
 for EXT in jpg png; do
 	# Tutte le immagini che non contengono lores o medres nel nome
-	for F in `find $dir/ -name "*.$EXT"`; do
+	for F in `find common$LANG/ $dir/ -name "*.$EXT"`; do
 		A=`echo $F | grep lores``echo $F | grep medres`
 		if [ -z "$A" ]; then
 			# La qualità dipende dall'opzione della classe openjournal

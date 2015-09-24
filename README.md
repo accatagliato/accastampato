@@ -1,4 +1,4 @@
-# accastampato, v1.0.0
+# accastampato, v1.0.1
 
 Latex sources and assets for the [accastampato](http://www.accastampato.it) magazine by [accatagliato](http://www.accatagliato.org).
 
@@ -10,7 +10,7 @@ A modern Linux shell (ie. bash), PdfLaTeX, BibTex, imagemagick (convert utility)
 
 # Fast how-to
 
-Uncompress the tarball somewhere in your filesystem.
+Clone the repository with `git clone https://github.com/accatagliato/accastampato.git` or download and uncompress the tarball somewhere in your filesystem.
 
 Enter the aforementioned directory: there you're provided with 3 scripts:
 
