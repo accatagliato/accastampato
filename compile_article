@@ -1,0 +1,63 @@
+#!/bin/bash
+
+LANG="_it"
+
+if [ $# == 1 ]; then
+	article_dir=$1
+	article_file=$article_dir/index.tex
+else
+	echo "==> Fatal error: non hai specificato l'articolo da compilare..."
+	exit 1
+fi
+
+echo "Compilo l'articolo $article_name"
+echo
+
+dir=${article_dir%%/*}
+cd $dir/tex_stuff
+
+if [ $? != 0 ];then
+        echo "==> Fatal error: cannot enter $dir/text_stuff, exiting..."
+        exit
+fi
+
+if [ ! -f article_head.tex ];then
+	echo "==> Fatal error: article_head.tex missing."
+	exit 1;
+fi
+
+if [ ! -f "../../$article_file" ];then
+	echo "==> Fatal error: $article_file not found. The article you want to process doesn't seem to be in this issue." >&2
+	exit 1;
+fi
+
+echo "
+\\begin{document}
+\\bibliographystyle{biblio_style}
+\\nobibliography{bibliography}
+\\inputpaper{../../$article_dir/index}
+\\end{document}
+" > article_tail.tex
+
+cat article_head.tex article_tail.tex > article.tex
+cp ../../$article_dir/bibliography.bib . &>/dev/null
+
+# Delete the old article, just in case
+#
+if [ -f article.pdf ]; then rm article.pdf; fi
+
+# Important bits
+#
+export TEXINPUTS="../../common$LANG:../../graphics:"
+pdflatex -interaction nonstopmode article.tex
+if [ -f "bibliography.bib" ]; then
+	bibtex article.aux
+	pdflatex -interaction nonstopmode article.tex
+	pdflatex -interaction nonstopmode article.tex
+fi
+mv article.pdf ../../$article_dir/index.pdf
+
+# Return whatever pdflatex returned...
+#
+exit 0
+
