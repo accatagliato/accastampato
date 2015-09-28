@@ -12,11 +12,14 @@ else
 	issue_number=$current_issue
 fi
 
-if [ ! -d "n"$issue_number"/" ]; then 
+dir="accastampato_n"$issue_number"/"
+
+if [ ! -d $dir ]; then 
 	echo "==> Fatal error: hai specificato il numero della rivista corretto?"
+	echo "==> sto cercando la directory: "$dir
 	exit 2
-else
-	dir="n"$issue_number
+# else
+# 	dir="n"$issue_number
 fi
 
 issue_name="IRR_"$current_issue
