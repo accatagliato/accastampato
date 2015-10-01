@@ -80,7 +80,7 @@ for (( i=$PAG_TOT; i>=$COUNT_MAX; i-- )); do
 	pdftk ${PAG_SX/.pdf/_zoccolo.pdf} ${PAG_DX/.pdf/_zoccolo.pdf} cat output temp.pdf >/dev/null
 	pdfnup temp.pdf --nup 2x1 --paper a4paper --outfile temp_1.pdf >/dev/null
 	pdfposter -mA3 temp_1.pdf temp_2.pdf &>/dev/null
-	pdftk A=temp_2.pdf cat Awest output $OUTTMP
+	pdftk A=temp_2.pdf cat Aleft output $OUTTMP
 	rm temp*
 # 	echo "Fatto..."
 # 	read C
