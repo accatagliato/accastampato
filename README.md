@@ -1,4 +1,4 @@
-# accastampato, v1.0.2
+# accastampato, v1.0.3
 
 Latex sources and assets for the [accastampato](http://www.accastampato.it) magazine by [accatagliato](http://www.accatagliato.org).
 
@@ -62,7 +62,7 @@ images.
 In printed mode you have crop lines, but the magazine is still in an A4 format.
 To generate the right pdf to print use the script A4toA3:
 
-* create a directory into tex\_stuff/ named A3
-* copy the A4 pdf in it
-* run A4toA3 (you can put the script in your bin/ and add it to PATH var): `A4toA3 IRR_nn.pdf`
+* create a directory into tex\_stuff/
+* copy the A4 final pdf
+* run A4toA3: `/path/to/A4toA3 IRR_nn.pdf`
 
