@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# Produce un pdf con pagine A3 fronte retro con margini di taglio e zoccolo inclusi,
+# a partire da un pdf A4 standard con margini di taglio.
+
+# Richiede: pdftk, pdfcrop, pdfposter, pdfjam, pdfnup, pdflatex, bc
+
+# Mezzo zoccolo (in pt)
+MEZZOCCOLO=0
+
+normalize () {
+if [ "${#1}" == "1" ]; then NUM="0$1"; else NUM="$1"; fi
+}
+
+# Richiede il nome del file di input e opzionalmente lo zoccolo (metà, in pt)
+if [ "$#" -eq "0" ]; then 
+	echo
+	echo "A4toA3 - Uso: A4toA3 <nome>.pdf [ <valore del mezzo zoccolo in pt> (default: 0) ]"
+	echo
+	exit 1
+fi
+
+if [ "$#" -eq "2" ]; then
+	MEZZOCCOLO=$2
+fi
+
+(( ZOCCOLO = MEZZOCCOLO * 2 ))
+INFILE=$1
+ROOT=${INFILE/.pdf/}
+
+#echo "IN=$INFILE, ROOT=$ROOT"
+echo
+echo "Elaboro $INFILE con mezzo zoccolo pari a $MEZZOCCOLO..."
+
+# Separa le singole pagine
+echo "Separo le pagine..."
+pdftk $INFILE burst output $ROOT"_%02d.pdf" >/dev/null
+PAG_TOT=`ls $ROOT"_"??".pdf" | wc -l` # Numero totale di pagine
+echo "PAG_TOT=$PAG_TOT"
+echo
+COUNT_MAX=`echo "scale=0; $PAG_TOT / 2 + 1" | bc -l`
+#echo "COUNT_MAX=$COUNT_MAX"
+
+# Associa le pagine A4 da affiancare nell'A3
+for (( i=$PAG_TOT; i>=$COUNT_MAX; i-- )); do 
+#	echo "i=$i"
+	CONT=`echo "scale=0; $i%2" | bc -l`
+#	echo "Divisione senza resto: CONT=$CONT"
+	# Se la pagina corrente è pari
+	echo
+	if [ $CONT -eq 0 ]; then
+		echo "Pagina pari!"
+		normalize $i
+		PAG_SX=$ROOT"_"$NUM".pdf"
+		normalize `echo "scale=0; a=$i - $PAG_TOT; if(0>a)a*=-1; a + 1" | bc -l`
+		PAG_DX=$ROOT"_"$NUM".pdf";
+		echo "$PAG_SX | $PAG_DX"
+	else
+		echo "Pagina dispari!"
+		normalize $i
+		PAG_DX=$ROOT"_"$NUM".pdf"
+		normalize `echo "scale=0; a=$i - $PAG_TOT; if(0>a)a*=-1; a + 1" | bc -l`
+		PAG_SX=$ROOT"_"$NUM".pdf";
+		echo "$PAG_SX | $PAG_DX"
+	fi
+
+	# Taglia i margini interni e aggiunge lo "zoccolo"
+	# I numeri sembrano essere ad-hoc per la rivista IRR, attenzione quando usati con documenti diversi
+	echo "Taglio $PAG_DX e $PAG_SX..."
+	pdfcrop $PAG_DX --margins "-108 10 0 0" ${PAG_DX/.pdf/_taglio.pdf} >/dev/null
+	pdfcrop ${PAG_DX/.pdf/_taglio.pdf} --margins "$MEZZOCCOLO 18 -10 18" ${PAG_DX/.pdf/_zoccolo.pdf} >/dev/null
+
+	pdfcrop $PAG_SX --margins "0 10 -116 0" ${PAG_SX/.pdf/_taglio.pdf} >/dev/null
+	pdfcrop ${PAG_SX/.pdf/_taglio.pdf} --margins "0 10 $MEZZOCCOLO 0" ${PAG_SX/.pdf/_zoccolo.pdf} >/dev/null
+	
+	# Unisce DX e SX in un A3
+	normalize `echo "scale=0; a=$i - $PAG_TOT; if(0>a)a*=-1; a + 1" | bc -l`
+	OUTTMP=$ROOT"_2x1_"$NUM".pdf"
+	echo "Compongo $OUTTMP..."
+	pdftk ${PAG_SX/.pdf/_zoccolo.pdf} ${PAG_DX/.pdf/_zoccolo.pdf} cat output temp.pdf >/dev/null
+	pdfnup temp.pdf --nup 2x1 --paper a4paper --outfile temp_1.pdf >/dev/null
+	pdfposter -mA3 temp_1.pdf temp_2.pdf &>/dev/null
+	pdftk A=temp_2.pdf cat Awest output $OUTTMP
+	rm temp*
+# 	echo "Fatto..."
+# 	read C
+done
+
+# Ricompongo il pdf finale
+echo
+normalize $ZOCCOLO
+OUTFILE=$ROOT"_toprint_z"$NUM".pdf"
+pdftk $ROOT"_2x1_"*.pdf cat output $OUTFILE
+echo "Pulizia..."
+rm *zoccolo* *taglio* *2x1* $ROOT"_"??.pdf
+echo "Fatto! Output in $OUTFILE"
+echo
+
+exit 0
