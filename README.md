@@ -1,4 +1,4 @@
-# accastampato, v1.0.1
+# accastampato, v1.0.2
 
 Latex sources and assets for the [accastampato](http://www.accastampato.it) magazine by [accatagliato](http://www.accatagliato.org).
 
